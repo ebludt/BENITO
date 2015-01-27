@@ -43,7 +43,7 @@ module rueda(gros=grosor, diam=diametro)
 	difference(){
 		union(){
 				rueda();
-				cylinder (r=15/2, h=12, $fn=20);
+				cylinder (r=15/2, h=grosor*3, $fn=20);
 		}
 		cylinder (r=10.5/2, h=100, $fn=20, center=true);
 	}
