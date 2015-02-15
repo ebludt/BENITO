@@ -37,12 +37,12 @@ tensora exterior(4)
 tensora interior (5)
 experimental (6)
 */
-pos_rueda=1;
+pos_rueda=3;
 
 /*(1)tornillos pasantes
 	(2) aletas
 */
-tipo_rueda=2;
+tipo_rueda=1;
 
 //pasodientes=
 
