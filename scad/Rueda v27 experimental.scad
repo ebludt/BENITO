@@ -6,7 +6,7 @@ version="V 2.6";
 
 //medidas del aro externo de la rueda.
 //diametro=86; //diametro externo de la rueda. influye en la velocidad.
-grosor=6;	// grosor del aro externo de la rueda
+grosor=3;	// grosor del aro externo de la rueda
 
 //medidas de los radios
 //grosor_radios=8; //grosor o altura de los radios
