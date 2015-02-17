@@ -177,7 +177,7 @@ difference()
 		//rotate([0,0,angulodientes*i])
 		//cube([4,distanciadientes/2,10]);
 	}
-	if (pos_rueda==3){
+	if (pos_rueda==3 || pos_rueda==7){
 		cylinder(r=(diametro-20)/2, h=20, $fn=50,center=true);	
 	}
 	
