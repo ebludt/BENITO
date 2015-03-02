@@ -12,11 +12,8 @@ void checkConect(){
   currentMillis = millis(); //almacenamos el momento actual
   if(currentMillis - previousMillis > tiempoDesc){ //comprobamos si desde la ultima vez que recibimos datos hasta ahora ha pasado mas del intervalo de seguridad
     alto(); //si ha pasado mas del intervalo de seguridad paramos el vehiculo.
-    Serial.println("conexion perdida");
-    lcd.clear();
-    lcd.home ();                   // go home
-    lcd.print("conexion perdida");
-    lcd.setBacklight(1);      
+    Serial.print("TX bad ");
+          
           
     switch (control_rc) {
             case 1:
@@ -28,12 +25,12 @@ void checkConect(){
               Mirf.init(); 
               Mirf.setRADDR((byte *)"recep");
               Mirf.payload = 6;
-    
+              Mirf.channel = 90;
               Mirf.config();
-              Serial.println("Intentando rearmar");
-              lcd.setCursor ( 0, 1 );
-               lcd.print("Intentando rearmar");
-              delay(100);
+              Mirf.configRegister(RF_SETUP,0x06); 
+              Serial.println("rearmar");
+              
+              delay(200);
              break;
              default: 
             // if nothing else matches, do the default
@@ -81,7 +78,7 @@ void recibirdatos(){
              while(Mirf.isSending()){
                    }
              ///////////////////////////////////////////////////
-               
+             
              }
              
              
@@ -91,7 +88,7 @@ void recibirdatos(){
              else{
                 checkConect();
               }
-             
+             //antes 10
              delay(10);
              //Serial.println("="); 
      

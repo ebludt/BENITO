@@ -102,12 +102,12 @@ Sistema de control RC sin cables.
 //-------------------------------DECLARACIÓN DE PINES COMO CONSTANTES
 
 //para nano
-//# define Pincsnmirf 9
-//# define Pincemirf 10
+# define Pincsnmirf 9
+# define Pincemirf 10
 
 ///para mega
-# define Pincsnmirf 53
-# define Pincemirf 49
+//# define Pincsnmirf 53
+//# define Pincemirf 49
 
 # define max485en 2
 
@@ -143,7 +143,7 @@ Sistema de control RC sin cables.
 
 //-------------------------------MODO DEBUG
 
-int DepuradoSerial=14;
+int DepuradoSerial=0;
 
 //--------------------------------------------------------------variables de control. NO MODIFICA NUNCA.
 long previousMillis = 0; //almacenamos ultimo tiempo donde no hemos recibido conexión
@@ -207,16 +207,24 @@ Servo servomd;
 
 
 void setup(){
-  
+    Serial.begin(9600);
     
     Mirf.spi = &MirfHardwareSpi;
     Mirf.csnPin = Pincsnmirf;
     Mirf.cePin = Pincemirf;
     Mirf.init(); 
     Mirf.setRADDR((byte*) Direccion_receptor);
+    Mirf.channel = 90;
     Mirf.payload = 6;
     Mirf.config();
-  Serial.begin(9600);
+    Mirf.configRegister(RF_SETUP,0x06); 
+    
+    byte rf_setup = 0;
+  Mirf.readRegister( RF_SETUP, &rf_setup, sizeof(rf_setup) );
+  Serial.print( "rf_setup = " );
+  Serial.println( rf_setup, BIN );
+  
+  
   
   //inicia la libreria de cominucacion de tados, con los detalles de que estrctura usa y el puerto seria que puede ser Serial, Serial1, Serial2, etc. 
   ETin.begin(details(datosrecibirrobot), &Serial);

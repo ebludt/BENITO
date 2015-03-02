@@ -203,7 +203,7 @@ void setup(){
       //Serial.println ("enviando");
     }
   }
-  Serial.println(error_ps2);
+  //Serial.println(error_ps2);
   break;
   
   }
@@ -219,11 +219,19 @@ void setup(){
   Mirf.csnPin = Pincsnmirf;
   Mirf.cePin = Pincemirf;
   Mirf.init(); 
-  Mirf.init(); 
   Mirf.setRADDR((byte *)"emiso");
+  Mirf.channel = 90;
   Mirf.payload = 6;
   Mirf.config();
+  Mirf.configRegister(RF_SETUP,0x06);  
+  
+  
+  byte rf_setup = 0;
+  Mirf.readRegister( RF_SETUP, &rf_setup, sizeof(rf_setup) );
+  Serial.print( "rf_setup = " );
+  Serial.println( rf_setup, BIN );
 
+  Serial.println( "Wireless initialized!" );
   //pin de que establece la comunicación semiduplex en el max485. si high envia, si low recibe
   pinMode(max485en, OUTPUT);
   pinMode(PinLed, OUTPUT);

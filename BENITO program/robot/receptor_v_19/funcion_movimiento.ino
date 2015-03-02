@@ -54,7 +54,7 @@ void movimiento( float eje_ly, float eje_lx, int velocidad){
        int motorizd;
        int motordch;
        
-       Serial.println(datosrecibirrobot.LX);
+       //Serial.println(datosrecibirrobot.LX);
        
        //ponemos los motores a 0 por si hay perdidas o error en comunicacion
        switch (control_motores) {
@@ -222,11 +222,6 @@ void movimiento( float eje_ly, float eje_lx, int velocidad){
        
        if (DepuradoSerial==1){
          Serial.println("  :-)");
-          lcd.clear();
-          lcd.home ();                   // go home
-          lcd.print(motor_izd);
-          lcd.setCursor ( 0, 1 );
-          lcd.print(motor_dch);
        }
        
 }
