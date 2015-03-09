@@ -38,16 +38,16 @@ void enviardatos(){
     while(Mirf.isSending()){
       //
       //Wait.
-      //Serial.println ("enviando");
+      Serial.println ("+");
     }
     digitalWrite(PinLed, LOW);
-    delay(20);
+    delay(50);
     
     ///////////////////////////RECEPCION
     
     if(Mirf.dataReady()){
                 Mirf.getData((byte *) &Vals);
-                //Serial.println("recibiendo");    
+                Serial.println("-");    
              }
       
     
