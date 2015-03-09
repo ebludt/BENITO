@@ -150,7 +150,7 @@ Sistema de control RC sin cables.
 
 //-------------------------------MODO DEBUG
 
-int DepuradoSerial=14;
+int DepuradoSerial=0;
 
 //--------------------------------------------------------------variables de control. NO MODIFICA NUNCA.
 long previousMillis = 0; //almacenamos ultimo tiempo donde no hemos recibido conexión
@@ -160,6 +160,7 @@ int motor_dch_ini=0;
 int motor_izd_obj=0;
 int motor_dch_obj=0;
 int aceleracion=8;
+int contador=0;
 
 
 //--------------------------------------------------------------librerias

@@ -10,6 +10,8 @@
 //--------------------------------------función de comprobación de ultima recepción---------------
 void checkConect(){
   currentMillis = millis(); //almacenamos el momento actual
+  contador=contador+1;
+  Serial.println(contador); 
   if(currentMillis - previousMillis > tiempoDesc){ //comprobamos si desde la ultima vez que recibimos datos hasta ahora ha pasado mas del intervalo de seguridad
     alto(); //si ha pasado mas del intervalo de seguridad paramos el vehiculo.
     Serial.print("TX bad ");
@@ -84,9 +86,11 @@ void recibirdatos(){
              Mirf.setTADDR((byte *)Direccion_emisor);
              Mirf.send((byte *) &data);
              while(Mirf.isSending() && emitiendo>0){
-                   Serial.println("-"); 
-                   //if(millis() - transmitiendoMillis > 100) emitiendo=0;
-             }     
+               Serial.print("_"); 
+                    
+                   if(millis() - transmitiendoMillis > 100) emitiendo=0;
+             }    
+            Serial.println(millis() - transmitiendoMillis);
              ///////////////////////////////////////////////////
                
                
@@ -102,7 +106,7 @@ void recibirdatos(){
                 checkConect();
               }
              //antes 10
-             delay(20);
+             delay(50);
              //Serial.println("="); 
      
             break;
