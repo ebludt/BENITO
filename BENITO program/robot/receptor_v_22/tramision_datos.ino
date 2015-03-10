@@ -78,7 +78,7 @@ void recibirdatos(){
                
              //lcd.setBacklight(0);
             
-            
+            delay(10);
             //////////////prueba emision
              transmitiendoMillis=millis();
              data[0]=random(1, 200);
