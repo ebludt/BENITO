@@ -9,7 +9,7 @@ void enviardatos(){
   long ultimoMillis = 0; //almacenamos ultimo tiempo donde no hemos recibido conexión
   unsigned long actualMillis;
   boolean recibido=false;
-  
+  int emitiendo=1; 
  /* 
   Serial.print (Vals[0]);
   Serial.print ("    ");
@@ -32,26 +32,33 @@ void enviardatos(){
     ////////////////////////////////////////////////////////////                 NRF24L01////////////////////////////////////////
     case 1:
     //control nrfl2401
-  
+    
+    //Asignamos dirección del receptor
     Mirf.setTADDR((byte *)"recep");
-    Mirf.send((byte *) &Vals);
-    while(Mirf.isSending()){
+    
+    millis_ahora=millis();
+    //Emitimos
+    //Mirf.powerUpTx();
+    Mirf.send((byte *) &Vals);  
+    while(Mirf.isSending()&& emitiendo>0){
       //
       //Wait.
+      if(millis() - millis_ahora > 10) emitiendo=0;
       Serial.print ("+");
     }
+    //apagamos el Led y damos un tiempo de espera
     digitalWrite(PinLed, LOW);
-    delay(55);//50
+    delay(25);//50
     
     ///////////////////////////RECEPCION
-    
+    Mirf.powerUpRx();
     if(Mirf.dataReady()){
                 Mirf.getData((byte *) &Vals);
                 Serial.print("-");    
-             }
+    }
       
     
-    
+    //Si recibimos al valor de control encendemos el led
     if (Vals[4]==150){
       digitalWrite(PinLed, HIGH);
        
@@ -61,6 +68,8 @@ void enviardatos(){
       contador=contador+1;
       
     }
+    
+    //mostramos datos cada segundo.
     millis_ahora=millis();
     if (millis_ahora - millis_antes > intervalo_muestra)
     {

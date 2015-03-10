@@ -56,6 +56,7 @@ void recibirdatos(){
              
              data[0]=128;
              data[1]=128;
+             Mirf.powerUpRx();
              if(Mirf.dataReady()){
                 Mirf.getData((byte *) &data);  
                 Serial.println("+");  
@@ -87,8 +88,8 @@ void recibirdatos(){
              Mirf.send((byte *) &data);
              while(Mirf.isSending() && emitiendo>0){
                Serial.print("_"); 
-                    
-                   if(millis() - transmitiendoMillis > 100) emitiendo=0;
+               if(millis() - transmitiendoMillis > 100) emitiendo=0;
+               Serial.print("0"); 
              }    
             Serial.println(millis() - transmitiendoMillis);
              ///////////////////////////////////////////////////
