@@ -10,6 +10,10 @@ void enviardatos(){
   unsigned long actualMillis;
   boolean recibido=false;
   int emitiendo=1; 
+  
+  
+  unsigned long started_waiting_at = millis();               // Set up a timeout period, get the current microseconds
+  boolean timeout = false;                                   // Set up a variable to indicate if a response was received or not
  /* 
   Serial.print (Vals[0]);
   Serial.print ("    ");
@@ -48,15 +52,39 @@ void enviardatos(){
     }
     //apagamos el Led y damos un tiempo de espera
     digitalWrite(PinLed, LOW);
-    delay(25);//50
+    delay(50);//50
     
     ///////////////////////////RECEPCION
     Mirf.powerUpRx();
+    
+    /*
     if(Mirf.dataReady()){
                 Mirf.getData((byte *) &Vals);
                 Serial.print("-");    
     }
-      
+    */
+  
+            
+    
+            while ( ! Mirf.dataReady()&&timeout==false ){                 // While nothing is received
+                    //Serial.println(F("check"));
+                    if (millis() - started_waiting_at > 50 ){            // If waited longer than 200ms, indicate timeout and exit while loop
+                      timeout = true;
+                      Serial.println(F("check if"));
+                      break;
+                      
+                    }      
+            }
+        
+            if ( timeout ){                                             // Describe the results
+              Serial.println(F("Failed, response timed out."));
+              
+              
+            }
+            else{
+               Mirf.getData((byte *) &Vals);
+               Serial.print("-");
+            }  
     
     //Si recibimos al valor de control encendemos el led
     if (Vals[4]==150){

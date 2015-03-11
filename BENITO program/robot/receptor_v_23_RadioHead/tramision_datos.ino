@@ -17,8 +17,7 @@ void checkConect(){
     Serial.print("TX bad ");
           
           
-    switch (control_rc) {
-            case 1:
+    #ifdef control_rc_MIRF
              //control nrfl2401
              //intentamos rearmar el mirf
               Mirf.spi = &MirfHardwareSpi;
@@ -31,23 +30,16 @@ void checkConect(){
               Mirf.config();
               Mirf.configRegister(RF_SETUP,0x06); 
               Serial.println("rearmar");
-              
-              delay(100);
-             break;
-             default: 
-            // if nothing else matches, do the default
-          // default is optional
-              break;
-    }
-  }
+    #endif
+   }
 }
 
 
 //---------------------------------------------------------función de recepción de datos
 void recibirdatos(){
      int emitiendo=1;
-     switch (control_rc) {
-            case 1:
+     
+     #ifdef control_rc_MIRF
              //control nrfl2401
              byte data[6]; // or int data[32];
              
@@ -57,6 +49,7 @@ void recibirdatos(){
              data[0]=128;
              data[1]=128;
              Mirf.powerUpRx();
+             /*
              if(Mirf.dataReady()){
                 Mirf.getData((byte *) &data);  
                 //Serial.println("+");  
@@ -71,15 +64,43 @@ void recibirdatos(){
              
              //Serial.println(datosrecibirrobot.LY);
              
+             */
              
+             unsigned long started_waiting_at = millis();               // Set up a timeout period, get the current microseconds
+             boolean timeout = false;                                   // Set up a variable to indicate if a response was received or not
+    
+            while ( ! Mirf.dataReady()&&timeout==false ){                 // While nothing is received
+                    //Serial.println(F("check"));
+                    if (millis() - started_waiting_at > 200 ){            // If waited longer than 200ms, indicate timeout and exit while loop
+                      timeout = true;
+                      Serial.println(F("check if"));
+                      break;
+                      
+                    }      
+            }
+        
+            if ( timeout ){                                             // Describe the results
+              Serial.println(F("Failed, response timed out."));
+              checkConect();
+              
+            }
+            else{
+               Mirf.getData((byte *) &data);
+               datosrecibirrobot.LY=data[0];
+               datosrecibirrobot.LX=data[1];
+               datosrecibirrobot.RY=data[2];
+               datosrecibirrobot.RX=data[3];
+               datosrecibirrobot.Control=data[4];
+               datosrecibirrobot.Vel=data[5];
+            }
              //comprobamos que recibimos el byte de control y que hay conexion
              if (data[4]==Codigo_control){
                  previousMillis=millis();
                  digitalWrite(PinLed,HIGH);
                
-             //lcd.setBacklight(0);
+             
             
-                delay(10);
+               
             //////////////prueba emision
                  transmitiendoMillis=millis();
                  data[0]=random(1, 200);
@@ -87,7 +108,7 @@ void recibirdatos(){
                  Mirf.setTADDR((byte *)Direccion_emisor);
                  Mirf.send((byte *) &data);
                  while(Mirf.isSending() && emitiendo>0){
-                     //Serial.print("_"); 
+                    // Serial.print("_"); 
                      if(millis() - transmitiendoMillis > 100) emitiendo=0;
                      //Serial.print("0"); 
                  }    
@@ -100,16 +121,16 @@ void recibirdatos(){
              }
              
              else{
-                checkConect();
+                //checkConect();
               }
              //antes 10
              delay(50);
              //Serial.println("="); 
      
-            break;
-            case 2:
-              //control mediante serial
-
+     #endif
+     
+     #ifdef control_rc_SERIAL
+            
               if(ETin.receiveData()){
                 //this is how you access the variables. [name of the group].[variable name]
                 //since we have data, we will blink it out. 
@@ -131,12 +152,8 @@ void recibirdatos(){
               else{
                 checkConect();
               } 
-             break;
-            default: 
-            // if nothing else matches, do the default
-          // default is optional
-            break;
-        }
+             
+     #endif
         
         
      
