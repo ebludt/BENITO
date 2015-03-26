@@ -40,7 +40,7 @@ tensora interior (5)
 experimental (6)
 esterior total (7)
 */
-pos_rueda=4;
+pos_rueda=5;
 
 /*(1)tornillos pasantes
 	(2) aletas
