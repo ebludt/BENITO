@@ -4,7 +4,7 @@
 
 diametro_varilla=9; //diametro interior del eje o varilla         ///////axis diameter
 diametro_exterior=15;	// grosor del aro externo de la rueda     ////////external diameter
-grosor_collar=12; //altura del collar             /////////height
+grosor_collar=13; //altura del collar             /////////height
 metrica_freno=3; //metrica tornillo freno         ///////screw size
 
 module collar(){

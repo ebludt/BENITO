@@ -2,11 +2,11 @@
 module brazo(){
 	hull(){
 	
-	cylinder(r = 9/2, h = 3, $fn = 50);
-	translate([18, 0, 0])
-    cylinder(r = 5/2, h = 3,  $fn = 50);
-	translate([-18, 0, 0])
-    cylinder(r = 5/2, h = 3,  $fn = 50);
+	cylinder(r = 11/2, h = 3, $fn = 50);
+	translate([20, 0, 0])
+    cylinder(r = 6/2, h = 3,  $fn = 50);
+	translate([-20, 0, 0])
+    cylinder(r = 6/2, h = 3,  $fn = 50);
 
 	}
 

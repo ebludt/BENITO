@@ -22,7 +22,7 @@ diam_eje_mandril=12; //diametro del eje del mandril
 casquillo=12.4;
 
 //medidas de las cadenas
-dientes=9; //numero de dientes de la rueda
+dientes=7; //numero de dientes de la rueda
 paso=30; //distacia entre las tuercas o dientes de la cadena
 Distancia_diente_borde=2.8; //2.8 para cadenas original
 
@@ -40,7 +40,7 @@ tensora interior (5)
 experimental (6)
 esterior total (7)
 */
-pos_rueda=5;
+pos_rueda=1;
 
 /*(1)tornillos pasantes
 	(2) aletas
@@ -209,6 +209,7 @@ echo("diametro de la rueda   ",diametro);
 echo("diametro de los dientes    ",distanciadientes);
 echo("separacion entre dientes y borde   ",(diametro-distanciadientes-tornillo_diente)/2);
 echo("Velocidad teorica a 550rpm ", (diametro*3.141592*550/1000000*60));
+echo("cuerda usada ", (diametro*3.141592*100/360));
 echo("diametro del hub    ",distanciahub);
 
 	
