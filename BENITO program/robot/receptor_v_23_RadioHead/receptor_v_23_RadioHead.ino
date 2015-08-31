@@ -315,7 +315,7 @@ void setup(){
   Serial.println ("programado por SGT VAZQUEZ");
   Serial.println ("comezando......");
   
-  
+  digitalWrite(PinMDR,HIGH);
   
   delay(2000);
 
